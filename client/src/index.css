@@ -1,0 +1,171 @@
+*{
+  margin: 0;
+  padding: 0.2rem;
+  box-sizing: border-box;
+}
+
+body{
+  font-family: 'Open Sans',sans-serif;
+  color: white;
+  background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url(./bg.webp);
+  background-size: cover;
+  background-position: center;
+}
+
+.title{
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 300;
+
+}
+.logo-holder{
+  display: flex;
+  justify-content: center;
+  margin-top: 150px;
+}
+
+.logo{
+  width: 100px;
+  height: 100px;
+  /* border: solid white 2px; */
+  /* border-radius: 50%; */
+  display: grid;
+  place-items: center;
+  font-size: 3rem;
+}
+
+form{
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 27%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.input{
+  background-color: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  padding: .75rem;
+  display: block;
+  width: 100%;
+  margin-top: 0.3rem;
+  border-radius: 5px;
+
+}
+
+.input::placeholder{
+  color:aliceblue;
+
+}
+
+.input:focus{
+  border: none;
+  outline: none;
+
+}
+
+.input:hover{
+  cursor: pointer;
+}
+
+.checkbox{
+  font-weight: 300;
+  margin-top: 0.3rem;
+}
+label{
+  margin-left: 0.3rem;
+}
+
+.sign-in-button{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.sign-in{
+  background-color: #2ecc71;
+  text-align: center;
+  width: 220px;
+  padding: 7px;
+  border-radius: 5px;
+
+}
+.sign-in-button p{
+  margin-top: 2rem;
+  font-weight: 300;
+}
+.sign-in-button span{
+  color: #2ecc71;
+}
+
+.logo-size{
+  height: 100px;
+  width: 100px;
+}
+
+.background{
+  width: 100vw;
+  height: 100vh;
+}
+
+.message-container{
+  width: 70%;
+  height: 80%;
+  color: rgb(222, 215, 215);
+  margin: auto;
+  background-color: rgb(36, 36, 37);
+  margin-bottom: 3%;
+}
+
+.input-box{
+  width: 70%;
+  margin: auto;
+  /* border: 2px solid red; */
+  display: flex;
+ justify-content: center;  
+ align-items: center;
+ 
+}
+
+input{
+  width: 100%;
+  border-radius: 2px;
+  border-top-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  margin-right: 3px;
+  padding: 5px;
+}
+
+
+button{
+  padding: 5px;
+  border-radius: 2px;
+}
+form{
+  margin: auto; 
+  /* display: inline; */
+}
+.me{
+  border: 2px solid white;
+  padding: 5px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  background-color: transparent;
+  float: right;
+  clear: left;
+}
+
+.you{
+  border: 2px solid white;
+  padding: 5px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  background-color: transparent;
+  float: left;
+  clear: right;
+}
