@@ -1,6 +1,6 @@
 import React from 'react'
 import Logo from './components/Logo';
-import Form from './components/Form';
+import Prompt from './components/Prompt';
 import "./index.css"
 
 const LogIn = () => {
@@ -8,7 +8,7 @@ const LogIn = () => {
 
         <div>
           <Logo />
-          <Form />
+          <Prompt />
         </div>
   );
 }

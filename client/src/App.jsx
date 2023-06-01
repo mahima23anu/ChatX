@@ -7,12 +7,13 @@ import Layout from './Layout';
 
 
 
+
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="LogIn" element={<LogIn />} />
+        <Route path="/" element={<LogIn />}>
+          {/* <Route path="LogIn" element={<LogIn />} /> */}
           <Route path="Main_page" element={<Main_page />} />
         
         </Route>
