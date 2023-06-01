@@ -7,10 +7,10 @@ const Layout = () => {
         <ul>
             <Link to="/"></Link>
           <li>
-            <Link to="/LogIn">LogIn</Link>
+            <Link to="/login">LogIn</Link>
           </li>
           <li>
-            <Link to="/Main_page">Main_Page</Link>
+            <Link to="/main_page">Main_Page</Link>
           </li>
 
         </ul>
