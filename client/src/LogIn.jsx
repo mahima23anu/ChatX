@@ -3,7 +3,7 @@ import Logo from './components/Logo';
 import Prompt from './components/Prompt';
 import "./index.css"
 
-const LogIn = () => {
+const LogIn = ({userName,setUsername}) => {
   return (
 
         <div>
