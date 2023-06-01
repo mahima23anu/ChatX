@@ -1,7 +1,3 @@
-// import io from 'socket.io-client';
-
-// const socket = io('http://localhost:3000');
-
 
 import Prompt from './components/Prompt';
 // import  { useState, useEffect } from 'react';
