@@ -1,7 +1,10 @@
 import io from 'socket.io-client';
-import React from 'react'
+import React, { useContext } from 'react'
 import {useEffect, useState } from "react";
-//
+import { Outlet, Link, Router } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../App';
+
 
 
 const socket = io.connect('http://localhost:8000'); // Replace with your server URL
@@ -26,10 +29,15 @@ const socket = io.connect('http://localhost:8000'); // Replace with your server 
 
 //
 const Prompt = () => {
+
+  const {userName,setUsername}=useContext(UserContext)
+  console.log(userName)
+  const route=useNavigate()
   const [inputValue, setInputValue] = useState({
     userName:""
   });
   const sendName = () => {
+    setUsername(inputValue.userName)
     socket.emit('userName', inputValue.userName);
   };
   useEffect(() => {
@@ -57,6 +65,7 @@ const handleSubmit = (e) => {
   
   // Do something with the submitted value
   console.log('Submitted value:', inputValue);
+  route("/main_page")
 };
 
 // export default function Form() {
@@ -71,7 +80,7 @@ const handleSubmit = (e) => {
 
         {/* </div> */}
         <div className="sign-in-button">
-            <button onClick={sendName} type="submit" className='sign-in'>ENTER</button>
+            <button onClick={sendName} type="submit" className='sign-in'>submit</button>
             <p>Forget Password <span>Sign UP!</span></p>
         </div>
       </form>
