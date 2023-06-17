@@ -9,13 +9,7 @@ import io from 'socket.io-client';
 import { createContext } from 'react';
 
 export const UserContext=createContext()
-
-
-const socket = io('http://localhost:8000');
-
-
-
-
+// const socket = io('http://localhost:8000');
 
 const App = () => {
   const [userName, setUsername] = useState('');
@@ -23,12 +17,9 @@ const App = () => {
     <UserContext.Provider value={{userName,setUsername}}>
     <BrowserRouter>
       <Routes>
+        
        <Route path="/" element={<LogIn/>} />
        <Route path="/main_page" element={<Main_page/>} />
-
-        
-      
-        
         
       </Routes>
     </BrowserRouter>
