@@ -5,7 +5,7 @@ import Main_page from './Main_page'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from './Layout';
 import  { useState,useEffect } from 'react';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 import { createContext } from 'react';
 
 export const UserContext=createContext()

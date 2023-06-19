@@ -30,6 +30,8 @@ io.on('connection',(socket)=>{
         user[socket.id]=uName
     socket.emit('nameReceived',"UserName Received")
 });
+
+    // socket.on('new_message',)
 });
 
 server.listen(8000,()=>{

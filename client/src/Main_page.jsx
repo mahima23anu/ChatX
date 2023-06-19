@@ -10,7 +10,7 @@ console.log(userName)
     return (
         <div className='background'>
             <div className="message-container">
-                <div className="me">Hello{userName}</div>
+                <div className="me">Hello {userName}</div>
                 <div className="you">Hii</div>
 
             </div>
