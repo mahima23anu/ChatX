@@ -1,11 +1,16 @@
 import React from 'react'
+import { UserContext } from './App'
+import { useContext } from 'react'
 // import './index.css'
 
-export default function main_page() {
+export default function Main_page() {
+const {userName}=useContext(UserContext)
+console.log(userName)
+
     return (
         <div className='background'>
             <div className="message-container">
-                <div className="me">Hello</div>
+                <div className="me">Hello {userName}</div>
                 <div className="you">Hii</div>
 
             </div>

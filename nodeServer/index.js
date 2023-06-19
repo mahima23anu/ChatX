@@ -23,13 +23,15 @@ const io=new Server(server,{
 // });
 
 io.on('connection',(socket)=>{
-    console.log("New user joined having id ${socket.id}");
+    console.log("New user joined having id", socket.id);
 
     socket.on('userName', uName => {
         console.log(`Received name: ${uName}`)
         user[socket.id]=uName
     socket.emit('nameReceived',"UserName Received")
 });
+
+    // socket.on('new_message',)
 });
 
 server.listen(8000,()=>{
