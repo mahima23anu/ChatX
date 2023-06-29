@@ -9,12 +9,16 @@ import  { useState,useEffect } from 'react';
 import { createContext } from 'react';
 
 export const UserContext=createContext()
+export const UserContext_mess=createContext()
 // const socket = io('http://localhost:8000');
 
 const App = () => {
   const [userName, setUsername] = useState('');
+  const [inputText,setinputText] = useState('');
   return (
     <UserContext.Provider value={{userName,setUsername}}>
+    <UserContext_mess.Provider value={{inputText,setinputText}}>
+
     <BrowserRouter>
       <Routes>
         
@@ -23,6 +27,7 @@ const App = () => {
         
       </Routes>
     </BrowserRouter>
+    </UserContext_mess.Provider>
     </UserContext.Provider>
 
   );

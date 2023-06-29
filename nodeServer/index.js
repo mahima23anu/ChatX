@@ -31,7 +31,15 @@ io.on('connection',(socket)=>{
     socket.emit('nameReceived',"UserName Received")
 });
 
-    // socket.on('new_message',)
+    socket.on('new_message',(message)=>{
+        // console.log(message)
+        io.emit("new_message",(message))
+        
+    });
+    socket.on('disconnect',()=>{
+        console.log("User with ${socket.id} userid disconnedted")
+    })
+
 });
 
 server.listen(8000,()=>{
