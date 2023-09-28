@@ -1,7 +1,7 @@
 import React from 'react'
 import "./index.css"
 import LogIn from './LogIn'
-import Main_page from './Main_page'
+import {Main_page} from './Main_page'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from './Layout';
 import  { useState,useEffect } from 'react';
