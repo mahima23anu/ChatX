@@ -166,7 +166,6 @@ form{
   border-radius: 4px;
   margin-bottom: 8px;
   background-color: transparent;
-  /* float: left; */
-  /* clear: right; */
-  /* hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii */
+  float: left;
+   clear: right; 
 }

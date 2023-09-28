@@ -1,6 +1,6 @@
 import React from 'react'
 import Logo from './components/Logo';
-import Prompt from './components/Prompt';
+import {Prompt} from './Main_page';
 import "./index.css"
 
 const LogIn = ({userName,setUsername}) => {
