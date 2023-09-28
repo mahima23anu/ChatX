@@ -16,18 +16,18 @@ const socket = io.connect('http://localhost:8000'); // Replace with your server 
 //     socket.emit('sendName', name);
 //   };
 
-  // useEffect(() => {
-  //   socket.on('nameReceived', (response) => {
-  //     console.log(response); // Log the response from the server
-  //   });
+//   useEffect(() => {
+//     socket.on('nameReceived', (response) => {
+//       console.log(response); // Log the response from the server
+//     });
 
-  //   return () => {
-  //     socket.off('nameReceived');
-  //   };
-  // }, []);
+//     return () => {
+//       socket.off('nameReceived');
+//     };
+//   }, []);
 // }
 
-//
+
 const Prompt = () => {
 
   const {userName,setUsername}=useContext(UserContext)

@@ -5,12 +5,10 @@ import Main_page from './Main_page'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from './Layout';
 import  { useState,useEffect } from 'react';
-// import io from 'socket.io-client';
 import { createContext } from 'react';
 
 export const UserContext=createContext()
 export const UserContext_mess=createContext()
-// const socket = io('http://localhost:8000');
 
 const App = () => {
   const [userName, setUsername] = useState('');
@@ -22,8 +20,12 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         
-       <Route path="/" element={<LogIn/>} />
-       <Route path="/main_page" element={<Main_page/>} />
+       <Route 
+       path="/" 
+       element={<LogIn/>} />
+       <Route 
+       path="/main_page" 
+       element={<Main_page/>} />
         
       </Routes>
     </BrowserRouter>

@@ -15,11 +15,19 @@ export default function Main_page() {
     const [chat, setChat] = useState([])
 
     useEffect(() => {
-        socket.on('new_message', (message) => {
-            console.log(message)
-            console.log(chat)
+        socket.on('new_message', (messageData) => {
+            // console.log(sent_user," sent message")
+            console.log(messageData)
+            // console.log(chat)
+            if(messageData.socketId===socket.id){
+                console.log("Message should be in right")
+            }
+            else{
+                console.log("Message should be in left")
 
-            setChat((prevchat) => [...prevchat, message])
+            }
+
+            setChat((prevchat) => [...prevchat, messageData.message])
             console.log(chat)
         });
         return () => socket.off('new_message');
@@ -29,29 +37,32 @@ export default function Main_page() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        var temp = e.target.elements.mess.value
-        setmsg(temp);
-        // setChat([...chat,temp])
+        const socketId=socket.id
         document.getElementById('mess').value = '';
-        socket.emit('new_message', temp);
+        socket.emit('new_message',{ message: msg, socketId});
+        setmsg("");
     }
     return (
         <div className='background'>
 
             <div className="message-container">
                 <div className="me">Hello {userName}</div>
+                <br></br>
+                <br></br>
                 {/* <div className="you">{chat}</div> */}
-                <div >
-                    {chat.map((item, index) => (
-                        <div className='you' key={index}>{item}</div>
-                    ))}
-                </div>
+                <div>
+                {chat.map((item, index) => (
+                <div className={`${socket.id === item.socketId ? "me" : "you"}`} key={index}>{item}</div>
+  ))}
+</div>
 
             </div>
             <form onSubmit={handleSubmit} >
                 <div className="input-box">
 
-                    <input type='text' id="mess" name="mess"></input>
+                    <input type='text' id="mess" name="mess"
+                    value={msg}
+                    onChange={(e) => setmsg(e.target.value)}/>
                     <button type='submit'>Submit</button>
 
 
