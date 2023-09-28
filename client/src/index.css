@@ -120,6 +120,8 @@ label{
   margin: auto;
   background-color: rgb(36, 36, 37);
   margin-bottom: 3%;
+  clear: both;
+  overflow: auto;
 }
 
 .input-box{
@@ -156,8 +158,8 @@ form{
   border-radius: 4px;
   margin-bottom: 8px;
   background-color: transparent;
-  float: right;
-  clear: left;
+  float: left;
+  clear: both;
 }
 
 .you{
@@ -166,6 +168,6 @@ form{
   border-radius: 4px;
   margin-bottom: 8px;
   background-color: transparent;
-  float: left;
-   clear: right; 
+  float: right;
+  clear: both;  
 }

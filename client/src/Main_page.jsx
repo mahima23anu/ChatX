@@ -95,7 +95,7 @@ export function Main_page() {
 
             }
 
-            setChat((prevchat) => [...prevchat, messageData.message])
+            setChat((prevchat) => [...prevchat, messageData])
             console.log(chat)
         });
         return () => socket.off('new_message');
@@ -119,9 +119,14 @@ export function Main_page() {
                 <br></br>
                 {/* <div className="you">{chat}</div> */}
                 <div>
-                {chat.map((item, index) => (
-                <div className={`${socket.id === item.socketId ? "me" : "you"}`} key={index}>{item}</div>
-  ))}
+                {chat.map((item, index) => {
+    console.log('Current item:', item); // Log the current item
+    return (
+      <div className={socket.id === item.socketId ? "me" : "you"} key={index}>
+        {item.message}
+      </div>
+    );
+  })}
 </div>
 
             </div>
