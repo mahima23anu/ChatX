@@ -4,6 +4,7 @@ const app = express();
 const http = require('http').createServer(app);
 const { Server } = require('socket.io');
 const cors = require('cors');
+const fs= require('fs')
 
 const user = {};
 
@@ -48,6 +49,19 @@ io.on('connection', (socket) => {
         console.log(`Socket ID of the sender: ${messageData.socketId}`);
         io.to(messageData.room).emit("new_message", messageData);
     });
+
+    socket.on('image', (base64String) => {
+        // console.table(base64String);
+      
+        // Send the image to the specified room
+        //working code
+        // io.to(base64String.room).emit('image', base64String.buffer);
+
+
+        //changes
+         io.to(base64String.room).emit('image', base64String);
+      });
+      
 
     socket.on('disconnect', () => {
     //     socket.on('left_room',(data)=>{
