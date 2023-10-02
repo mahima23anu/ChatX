@@ -106,10 +106,12 @@ export const Prompt = () => {
 
 export function Main_page() {
   const [userEntered, setuserEntered] = useState('');
-  const [userLeft,setUserLeft]=useState('');
+  const [userLeft, setUserLeft] = useState('');
   const { userName } = useContext(UserContext)
   const { room, setRoom } = useContext(UserContext)
-  console.log(userName)
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState([]);
+  // console.log(userName)
   // const {inputText,setinput}=useContext(UserContext_mess)
   const [msg, setmsg] = useState("")
   const [chat, setChat] = useState([])
@@ -137,10 +139,28 @@ export function Main_page() {
 
     });
 
+    socket.on('image', (base64String) => {
+      console.log('1')
+      // const Uint8Array=base64String;
+      console.table(base64String)
+      // const byteArray = new Uint8Array(atob(base64String).split('').map(char => char.charCodeAt(0)));
+      // const blob = new Blob([byteArray],{type:'image/*'});
+      // const imageURL=URL.createObjectURL(blob)
+      // console.log(imageURL)
+
+      //working code
+      // setUrl([...url,base64String])
+
+      //changes
+      setChat((previmg) => [...previmg, base64String])
+
+
+    })
+
     // socket.on("user_left",(message)=>{
     //   setUserLeft(message);
     //   console.log("chat@@ ", message)
-    
+
     // })
 
 
@@ -148,8 +168,12 @@ export function Main_page() {
       //  socket.emit('left_room',{ usern: inputValue.userName, room: room })
       socket.off('new_message');
       socket.off('user_joined');
+      socket.off('image')
+      // if (url) {
+      //   URL.revokeObjectURL(url);
+      // }
     }
-  }, [socket]);
+  }, [socket, url]);
 
 
   // function leaveRoom(e){
@@ -162,9 +186,37 @@ export function Main_page() {
     e.preventDefault();
     const socketId = socket.id
     document.getElementById('mess').value = '';
-    socket.emit('new_message', { message: msg, socketId: socketId, user: userName , room:room});
+    socket.emit('new_message', { message: msg, socketId: socketId, user: userName, room: room, type: 'msg' });
     setmsg("");
   }
+
+  const handleImage = (e) => {
+    e.preventDefault()
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    // console.log(e.target.files[0])
+    reader.onload = (e) => {
+      // const buffer=new Uint8Array(e.target.result);
+      // const blob= new Blob([buffer],{type:file.type})
+      setImage(e.target.result);
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  const handleUpload = (e) => {
+    e.preventDefault();
+    console.log("hiiiiiiiiiiiiiiiiiiiiiiii")
+    // setImage(e.target.result)
+    // console.log(image)
+
+    socket.emit('image', { room: room, buffer: image, socketId: socket.id,user:userName , type: 'img' });
+    // setImage([]);
+
+    setImage(null)
+  };
+
+  // console.log(url)
   return (
     <div className='background'>
       <div className="user_nav">
@@ -175,7 +227,13 @@ export function Main_page() {
         {/* <div className={userLeft === '' ? "self" : "joining"}>{userLeft}</div> */}
         <br></br>
         <br></br>
-        {/* <div className="you">{chat}</div> */}
+
+        {/* working code */}
+        {/* <div>
+          {url.map((url, index) => (
+            <img key={index} src={url} alt="Uploaded" style={{ maxWidth: '300px' }} />
+          ))}
+        </div>
         <div>
           {chat.map((item, index) => {
             console.log('Current item:', item); // Log the current item
@@ -187,15 +245,44 @@ export function Main_page() {
                 <div className="mess">
                   <div className="name_display">
                     {item.user}
-
                   </div>
                   {item.message}
 
                 </div>
+
               </div>
             );
           })}
+        </div>  */}
+
+
+<div>
+  {chat.map((item, index) => (
+    <div className={socket.id === item.socketId ? "me" : "you"} key={index}>
+      <div className="emoji">
+        <RiChatSmile3Line className='logo' />
+      </div>
+      {item.type === 'msg' ? (
+        <div className="mess">
+          <div className="name_display">
+            {item.user}
+          </div>
+          {item.message}
         </div>
+      ) : item.type === 'img' ? (
+        <div className="mess">
+          <div className="name_display">
+            {item.user}
+          </div>
+          <img key={index} src={item.buffer} alt="Uploaded" style={{ maxWidth: '300px' , maxHeight: '300px' }} />
+          {/* Console log the item.buffer */}
+          {/* {console.log('item.buffer:', item.buffer)} */}
+        </div>
+      ) : null}
+    </div>
+  ))}
+</div>
+
 
       </div>
       <form onSubmit={handleSubmit} >
@@ -208,6 +295,10 @@ export function Main_page() {
         </div>
       </form>
       {/* <button type='submit' id='left' onClick={leaveRoom}>Leave room</button> */}
+      <form>
+        <input type='file' accept='image/*' onChange={handleImage} />
+        <button onClick={handleUpload}>Upload Image</button>
+      </form>
     </div>
   )
 }
