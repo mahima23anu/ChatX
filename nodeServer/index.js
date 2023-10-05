@@ -17,6 +17,12 @@ const io = new Server(http, {
     }
 });
 
+const uploadPath = './uploads'; // Adjust the path as needed
+
+// Create the upload directory if it doesn't exist
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath);
+}
 
 io.on('connection', (socket) => {
     console.log("New user joined having id", socket.id);
@@ -28,7 +34,7 @@ io.on('connection', (socket) => {
         console.log(`Room: ${room}`)
         user[socket.id] = usern;
         socket.join(room);
-        socket.broadcast.to(room).emit("joined_user",`${usern} has joined`)
+        socket.broadcast.to(room).emit("joined_user",{user_detail:`${usern} has joined`,type:'entry'})
         // socket.to(room).emit("joined_user",{
         //     entered_user:`${usern} has joined you all`,
         //     socketId:socket.id 
@@ -37,12 +43,7 @@ io.on('connection', (socket) => {
         socket.to(room).emit('nameReceived', "UserName Received");
     });
 
-    // socket.on('left_room',(data)=>{
-    //     const {usern,room}=data;
-    //     socket.leave(room);
-    //     socket.broadcast.to(room).emit("user_left",`${usern} has left`)
-
-    // })
+    
 
     socket.on('new_message', (messageData) => {
         console.log(`Received message from ${socket.id}: ${messageData.message}`);
@@ -61,7 +62,20 @@ io.on('connection', (socket) => {
         //changes
          io.to(base64String.room).emit('image', base64String);
       });
-      
+
+      socket.on('file_upload',({chunk,fileName}) =>{
+        console.log(fileName)
+        const filePath = path.join(uploadPath, fileName);
+        fs.appendFileSync(filePath, Buffer.from(chunk));    
+
+      });
+
+      socket.on('file_upload_complete',(data)=>{
+        console.log('File upload complete');
+        io.to(data.room).emit('file_uploaded',{message: 'File uploaded successfully'})
+      })
+
+    
 
     socket.on('disconnect', () => {
     //     socket.on('left_room',(data)=>{
@@ -75,6 +89,8 @@ io.on('connection', (socket) => {
     });
 });
 
+
+  
 http.listen(8000, () => {
     console.log("Server running at port 8000");
 });
