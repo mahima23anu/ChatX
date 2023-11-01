@@ -142,7 +142,7 @@ label{
 
 .message-container{
   width: 70%;
-  height: 70%;
+  height: 80%;
   color: rgb(222, 215, 215);
   margin: auto;
   background-color: rgb(36, 36, 37,0.3);
@@ -192,9 +192,7 @@ form{
   /* background-color: #b1b7cb;
   color: rgb(255, 255, 255); */
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  /* margin-left: 40%; */
-  /* display: block; */
-
+  margin-left: 40%;
   
 }
 
@@ -209,8 +207,7 @@ form{
   /* background-color: #E5E5EA;
   color: black; */
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  /* margin-right: 40%; */
-  display: block;
+  margin-right: 40%;
 
   
 }
@@ -222,7 +219,6 @@ form{
     border: 2px solid white;
     padding: 5px;
     border-radius: 5px;
-    display: block;
     
 }
 
@@ -233,7 +229,6 @@ form{
   border: 2px solid white;
   padding: 5px;
   border-radius: 5px;
-  display: block;
 }
 
 .me .logo {
@@ -251,12 +246,9 @@ form{
 }
 
 .joining {
-  /* display: flex;
+  display: flex;
   justify-content: center;
   align-items: center; 
-  text-align: center; */
-  clear: both;
-  display: block;
   text-align: center;
   border: 3px solid black;
   margin: 5px;
@@ -275,6 +267,7 @@ form{
 .name_display{
   font-size: 14px;
   font-weight: bold;
+  /* padding: 5px; */
 }
 
 
@@ -298,113 +291,4 @@ form{
   background-color: rgb(249, 101, 101);
   border-radius: 5px;
   color: white;
-}
-
-/* Container for "Enter Text" form */
-.input-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px; /* Add some space between "Enter Text" and "Upload" sections */
-}
-
-.input-box input {
-  background-color: rgba(255, 255, 255, 0.2);
-  border: none;
-  color: white;
-  padding: 0.75rem;
-  width: 95%;
-  margin-top: 0.3rem;
-  border-radius: 5px;
-  outline: none;
-  text-align: center; /* Center text within the input field */
-}
-
-/* Style for "Enter Text" button */
-.input-box button {
-  background-color: #2ecc71;
-  text-align: center;
-  width: 95%;
-  padding: 7px;
-  border-radius: 5px;
-  color: white;
-  margin-top: 10px; /* Add some space between the input and the button */
-}
-
-/* Container for "Upload" options */
-.upload {
-  display: flex;
-  flex-direction: row; /* Ensure buttons are in a row */
-  align-items: center;
-  justify-content: center;
-  margin: 10px;
-  padding: 20px;
-  border: 2px solid #3498db; /* Change border color to blue */
-  border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.2);
-  width: 25%;
-  height: 10vh;
-}
-
-.file-upload {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.file-upload button {
-  background-color: #3498db; /* Change button color to blue */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  margin-left: 10px;
-  cursor: pointer;
-  
-}
-
-.file-upload button:hover {
-  background-color: #2980b9; 
-}
-
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 10vh;
-  width: 70%;
-  margin: auto;
-}
-
-input[type="file"] {
-  display: none;
-}
-
-.custom-file-input {
-  background-color: #2ecc71;
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  display: inline-block;
-  text-align: center;
-  font-size: 3px;
-}
-
-/* Style the label that acts as the custom file input */
-.custom-file-label {
-  display: inline-block;
-  padding: 5px 10px;
-  border: 1px solid #2ecc71;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-/* Style the label when a file is selected */
-.custom-file-label.selected {
-  background-color: #2ecc71;
-  color: white;
-  border: 1px solid #2ecc71;
 }

@@ -1,5 +1,14 @@
 {
-  "devDependencies": {
-    "react-router-dom": "^6.11.2"
-  }
+  "name": "chatx",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:frontend":"cd client && npm run dev",
+    "build:frontend":"cd client && npm run build",
+    "start:backend":"cd nodeServer && npm run start",
+    "start:all":"npm run build:frontend && npm run start:backend"
+  },
+  "author": "Mahima Gupta",
+  "license": "ISC"
 }
