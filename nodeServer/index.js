@@ -10,6 +10,13 @@ const user = {};
 
 app.use(cors());
 
+app.use(express.static("../client/dist"));
+
+app.get("/", function (req, res) {
+  res.sendFile("../client/dist/index.html");
+});
+
+let receivedBuffer = Buffer.alloc(0);
 const io = new Server(http, {
     cors: {
         origin: "http://localhost:3000",
@@ -63,8 +70,19 @@ io.on('connection', (socket) => {
          io.to(base64String.room).emit('image', base64String);
       });
 
+      // socket.on('image_upload',(chunk)=>{
+      //   const binaryData = Buffer.from(JSON.stringify(chunk));
+
+      //   receivedBuffer = Buffer.concat([receivedBuffer, binaryData]);
+
+      // })
+
+      // socket.on('image_upload_complete',(imageData)=>{
+      //   io.to(imageData.room).emit('imageBuffer',{buffer:receivedBuffer,type:'img'});
+      // })
+
       socket.on('file_upload',({chunk,fileName}) =>{
-        console.log(fileName)
+        // console.log(fileName)
         const filePath = path.join(uploadPath, fileName);
         fs.appendFileSync(filePath, Buffer.from(chunk));    
 

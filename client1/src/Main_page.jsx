@@ -5,8 +5,10 @@ import { UserContext_mess } from './App'
 import io from 'socket.io-client';
 import { useNavigate } from 'react-router-dom';
 import { RiChatSmile3Line } from "react-icons/ri";
-// const crypto=require('crypto');
-
+// import crypto from 'crypto-browserify';
+// const crypto=require('crypto-browserify');
+// const stream=require('stream-browserify')
+// import './index.css'
 
 // const {publicKey ,  privateKey} = crypto.generateKeyPairSync("rsa",{
 //   modulusLength:2048, //key size in bits
@@ -28,6 +30,14 @@ export const Prompt = () => {
     userName: ""
   });
 
+  const handleCreateRoom = () => {
+    const newRoomId = Math.random().toString(36).substring(7);
+    setSelectedRoom([...roomOption, newRoomId]);
+  };
+
+   const handleJoinRoom = (roomId) => {
+    setSelectedRoom(roomId);
+  };
   const sendName = () => {
     setUsername(inputValue.userName)
     console.log("UseName", `${inputValue.userName}`)
@@ -121,8 +131,7 @@ export function Main_page() {
   const [url, setUrl] = useState([]);
   const [msg, setmsg] = useState("")
   const [chat, setChat] = useState([])
-  const [file, setFile] = useState(null);
- 
+  const [file,setFile] =useState(null);
 
   useEffect(() => {
     socket.on('new_message', (messageData) => {
@@ -162,7 +171,7 @@ export function Main_page() {
     socket.on('image', (base64String) => {
       // console.log('1')
       // const Uint8Array=base64String;
-      console.table(base64String)
+      // console.table(base64String)
       // const byteArray = new Uint8Array(atob(base64String).split('').map(char => char.charCodeAt(0)));
       // const blob = new Blob([byteArray],{type:'image/*'});
       // const imageURL=URL.createObjectURL(blob)
@@ -176,17 +185,13 @@ export function Main_page() {
 
 
     });
-    // socket.on('image',(imageItem)=>{
-    //   console.log(imageItem)
-    //   setChat((previmg) => [...previmg, imageItem])
-    // })
 
-    socket.on('file_uploaded', (data) => {
+    socket.on('file_uploaded',(data)=>{
       console.log(data.message);
 
     })
 
-
+    
 
 
     return () => {
@@ -195,7 +200,7 @@ export function Main_page() {
       socket.off('joined_user');
       socket.off('image');
       socket.off('file_uploaded');
-
+      
     }
   }, [socket, url]);
 
@@ -222,57 +227,6 @@ export function Main_page() {
     reader.readAsDataURL(file);
   }
 
-  // const handleImage = (e) =>{
-  //   e.preventDefault();
-  //   // console.log(e.target.files[0])
-  //   setImage(e.target.files[0])
-  // }
-
-  // const handleImage=(e)=>{
-  //   e.preventDefault();
-  //   const file=e.target.files[0];
-  //   const reader = new FileReader();
-  //     reader.onload = () => {
-  //       const arrayBuffer = reader.result;
-  //       const data = new Uint8Array(arrayBuffer);
-  //       // console.log(arrayBuffer)
-  //       // console.log(data)
-  //       const chunckSize = 1024;
-
-  //       for (let i = 0; i < data.length; i += chunckSize) {
-  //         const chunk = data.slice(i, i + chunckSize);
-  //         socket.emit('image_upload', { chunk });
-  //       }
-  //       socket.emit('image_upload_complete', { room: room });
-
-  //     };
-  //     reader.readAsArrayBuffer(file);
-  //   }
-
-  // const handleUpload =(e)=>{
-  //   e.preventDefault();
-  //   if(image instanceof Blob){
-  //       const reader = new FileReader();
-  //         reader.onload = () => {
-  //           const arrayBuffer = reader.result;
-  //           const data = new Uint8Array(arrayBuffer);
-  //           // console.log(arrayBuffer)
-  //           // console.log(data)
-  //           const chunckSize = 1024;
-    
-  //           for (let i = 0; i < data.length; i += chunckSize) {
-  //             const chunk = data.slice(i, i + chunckSize);
-  //             socket.emit('image_upload', { chunk });
-  //           }
-  //           socket.emit('image_upload_complete', { room: room });
-    
-  //         };
-  //         reader.readAsArrayBuffer(image);
-  //       }
-  //     }
-   
-
-
   const handleUpload = (e) => {
     e.preventDefault();
 
@@ -282,64 +236,37 @@ export function Main_page() {
     setImage(null)
   };
 
-  const handleFile = (e) => {
+  const handleFile =(e) =>{
     e.preventDefault();
     setFile(e.target.files[0]);
   }
 
-  const UploadFile = (e) => {
+  const UploadFile =(e) =>{
     e.preventDefault();
-    if (file) {
-      const reader = new FileReader();
+    if(file){
+      const reader=new FileReader();
 
-      reader.onload = () => {
-        const arrayBuffer = reader.result;
+      reader.onload = () =>{
+        const arrayBuffer =reader.result;
         const data = new Uint8Array(arrayBuffer);
         // console.log(arrayBuffer)
         // console.log(data)
-        const chunckSize = 1024;
+        const chunckSize =1024;
 
-        for (let i = 0; i < data.length; i += chunckSize) {
-          const chunk = data.slice(i, i + chunckSize);
-          socket.emit('file_upload', { chunk, fileName: file.name });
+        for(let i=0;i<data.length;i+=chunckSize){
+          const chunk = data.slice(i,i+chunckSize);
+          socket.emit('file_upload',{chunk,fileName:file.name});
         }
-        socket.emit('file_upload_complete', { room: room });
+        socket.emit('file_upload_complete',{room:room});
 
       };
       reader.readAsArrayBuffer(file);
 
     }
-   
   }
 
+  
 
-  // const ReconstructImage = (completeBuffer) => {
-  //   const [imageSrc, setImageSrc] = useState('');
-  
-  //   useEffect(() => {
-  //     const loadImage = async () => {
-  //       const blob = new Blob([completeBuffer], { type: 'image/*' });
-  
-  //       const imageSrc = await new Promise((resolve) => {
-  //         const reader = new FileReader();
-  //         reader.onload = () => resolve(reader.result);
-  //         reader.readAsDataURL(blob);
-  //       });
-  
-  //       setImageSrc(imageSrc);
-  //       console.log(imageSrc);
-  //     };
-  
-  //     loadImage();
-  //   }, [completeBuffer]);
-  
-  //   return (
-  //     <div>
-  //       {imageSrc && <img src={imageSrc} alt="Rendered Image" />}
-  //     </div>
-  //   );
-  // };
-  
 
 
   // const pdfUrl = ''
@@ -354,7 +281,7 @@ export function Main_page() {
         <div>
           {chat.map((item, index) => (
             <div>
-
+             
               {/* <div className="emoji">
                 <RiChatSmile3Line className='logo' />
               </div> */}
@@ -373,7 +300,7 @@ export function Main_page() {
                 </div>
               ) : (item.type === 'img' || item.type === 'entry') ? (
                 <div>
-                  {item.type === 'img' ? (
+                    {item.type === 'img' ? (
                     <div className={socket.id === item.socketId ? "me" : "you"} key={index}>
                       <div className="emoji">
                         <RiChatSmile3Line className='logo' />
@@ -382,17 +309,13 @@ export function Main_page() {
                         <div className="name_display">
                           {item.user}
                         </div>
-                        <img key={index} src={item.buffer} alt="Uploaded" style={{ maxWidth: '300px', maxHeight: '300px' }} />
-                        {/* <img src={reconstructImage(item.buffer)} alt="Image" /> */}
-                        {/* <ReconstructImage/> */}
-                        
-                        <div id="image-container"></div>
+                        <img  key={index} src={item.buffer} alt="Uploaded" style={{ maxWidth: '300px', maxHeight: '300px' }} />
                       </div>
                     </div>
                   ) : (
                     <div>
                       <div className={item.user_detail === '' ? "self" : "joining"}>{item.user_detail}</div>
-                    </div>
+                      </div>
                   )}
                 </div>
               ) : null}
@@ -402,7 +325,7 @@ export function Main_page() {
 
 
       </div>
-      {/* <form onSubmit={handleSubmit} >
+      <form  onSubmit={handleSubmit} >
         <div className="input-box">
 
           <input type='text' id="mess" name="mess"
@@ -410,62 +333,16 @@ export function Main_page() {
             onChange={(e) => setmsg(e.target.value)} />
           <button type='submit'>Submit</button>
         </div>
-      </form> */}
+      </form>
       {/* <button type='submit' id='left' onClick={leaveRoom}>Leave room</button> */}
-      {/* <form className='upload'>
+      <form>
         <input type='file' accept='image/*' onChange={handleImage} />
         <button onClick={handleUpload}>Upload Image</button>
-        <input type='file' accept='/*' onChange={handleFile} />
+        <input type='file' accept='/*' onChange={handleFile}/>
         <button onClick={UploadFile}>Upload File</button>
         <div>
-        </div>
-      </form> */}
-
-      <div className="center">
-        <form className="upload">
-          <div className="file-upload">
-            {/* <input type="file" accept="image/*" onChange={handleImage} /> */}
-            <div className="upload-option">
-              <label className="custom-file-label" htmlFor="imageInput">Select Image</label>
-              <input
-                type="file"
-                id="imageInput"
-                accept="image/*"
-                onChange={handleImage}
-              />
-            </div>
-            <button onClick={handleUpload}>Upload Image</button>
-          </div>
-          <div className="file-upload">
-            {/* <input type="file" accept="*" onChange={handleFile} /> */}
-            <div className="upload-option">
-              <label className="custom-file-label" htmlFor="fileInput">Select File</label>
-              <input
-                type="file"
-                id="fileInput"
-                accept="/*"
-                onChange={handleFile}
-              />
-            </div>
-
-            <button onClick={UploadFile}>Upload File</button>
-          </div>
-        </form>
-        <form onSubmit={handleSubmit} className="input-box">
-          <input
-            type="text"
-            id="mess"
-            name="mess"
-            value={msg}
-            onChange={(e) => setmsg(e.target.value)}
-            placeholder="Type your message here"
-          />
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-
-
-
+    </div>
+      </form>
     </div>
   )
 }
